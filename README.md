@@ -1,2 +1,0 @@
-# PokemonGO
-Fases del PokemonGO
