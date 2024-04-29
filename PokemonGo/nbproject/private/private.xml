@@ -7,9 +7,11 @@
             <file>file:/C:/Users/mabardaji/Documents/NetBeansProjects/UF3/PokemonGo/src/pokemongo/PokemonGo.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Thezo/Documents/NetBeansProjects/PokemonGo/src/fitxers/Caratula.java</file>
-            <file>file:/C:/Users/Thezo/Documents/NetBeansProjects/PokemonGo/src/fitxers/LineaLecturaFichero.java</file>
-            <file>file:/C:/Users/Thezo/Documents/NetBeansProjects/PokemonGo/src/pokemongo/PokemonGo.java</file>
+            <file>file:/C:/Users/joal7509/Documents/NetBeansProjects/PokemonGo/src/fitxers/LineaLecturaFichero.java</file>
+            <file>file:/C:/Users/joal7509/Documents/NetBeansProjects/PokemonGo/src/BD/DBConnect.java</file>
+            <file>file:/C:/Users/joal7509/Documents/NetBeansProjects/PokemonGo/src/pokemongo/PokemonGo.java</file>
+            <file>file:/C:/Users/joal7509/Documents/NetBeansProjects/PokemonGo/src/fitxers/Caratula.java</file>
+            <file>file:/C:/Users/joal7509/Documents/NetBeansProjects/PokemonGo/src/model/EntrenadorDAO.java</file>
         </group>
     </open-files>
 </project-private>

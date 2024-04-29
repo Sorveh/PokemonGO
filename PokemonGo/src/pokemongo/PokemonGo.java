@@ -5,13 +5,17 @@
 package pokemongo;
 
 import fitxers.Caratula;
-import fitxers.LineaLecturaFichero;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import menuUtils.MenuDaw;
+import menuUtils.OptionDuplicateException;
+import model.Entrenador;
+import model.EntrenadorDAO;
 
 /**
  *
@@ -19,6 +23,8 @@ import java.util.logging.Logger;
  */
 public class PokemonGo {
 
+    Scanner sc;
+    EntrenadorDAO entrenadores;
     /**
      * @param args the command line arguments
      */
@@ -30,75 +36,150 @@ public class PokemonGo {
     /* la ejecucion programa*/
     private void run() {
         
-        mostarLogo();
-        System.out.println("");
-        
-        mostrarMenu();  
-    }
-
-    private void mostarLogo() {
         try {
-            Caratula logo = new Caratula("ficheros/caratula.txt");
+            boolean exit = false;
+            mostrarLogo();
             
-            ArrayList<String> logoPokemon = logo.recuperarDatos();
+            MenuDaw menu = new MenuDaw("Manteniment Agenda ");
             
-            System.out.println(logoPokemon);
             
-        } catch (FileNotFoundException ex) {
-            System.out.println(ex.getMessage());
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-    
-    
-    private int cargarMenu() {
-
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("0.- Salir");
-        System.out.println("1.- Dar de alta entrenador.");
-        System.out.println("2.- Dar de baja entrenador.");
-        System.out.println("3.- Consultar entrenador.");
-        System.out.println("4.- Cazar Pokemon.");
-        System.out.println("5.- Listar Pokemons cazados.");
-        System.out.println("6.- Listar tipos de pokemons existentes en juego.");
-
-        return sc.nextInt();
-    }
-    
-    
-    private void mostrarMenu() {
-        boolean exit = false;
-        System.out.println("Cargando menu...");
-            do{
-                int opcion = cargarMenu();
-                switch(opcion)
+            addAllOptions(menu); 
+            //introDadesProva(/* */);
+            int opcio;
+            entrenadores = new EntrenadorDAO();
+            //tractar opcio escollida bucle fins que donis sortir no acabi CASA
+            do
+            {
+                //mostrar el menu i escollir opcio CASA
+                opcio = menu.displayMenu();
+                switch(opcio)
                 {
-                    case 1:
-                        System.out.println("Has dado en la opcion 1");
-                        break;
                     case 2:
-                        System.out.println("Has dado en la opcion 2");
-                        break;                     
+                        altaEntrenador();
+                        break;
                     case 3:
-                        System.out.println("Has dado en la opcion 3");
-                        break;  
+                        borrarEntrenador();
+                        break;
                     case 4:
-                        System.out.println("Has dado en la opcion 4");
+                        consultaEntrenador();
                         break;
                     case 5:
-                        System.out.println("Has dado en la opcion 5");
-                        break;                     
+                        cazarPokemon();
+                        break;
                     case 6:
-                        System.out.println("Has dado en la opcion 6");
-                        break;   
-                    case 0:
-                        System.out.println("Has dado en la opcion 0");
+                        listarMochila();
+                        break;
+                    case 7:
+                        listarTodosPokemons();
+                        break;
+                    case 1: //Sortir
+                        salir();
                         exit = true;
                         break;
-                }
-            } while(!exit);
+                } 
+            }while(!exit);
+            
+            
+        } catch (SQLException ex) {
+            System.out.println("Hay un error SQL " + ex.getMessage());
+        }
+ 
+    
+}
+
+    private void mostrarLogo()  {
+        try {
+            Caratula logo = new Caratula();
+            
+            List<String> portada = logo.recuperarDatos();
+            
+            for (String lineas : portada) {
+                System.out.println(lineas);
+            }
+            
+            
+        } catch (FileNotFoundException ex) {
+            System.out.println("Fichero no encontrado " + ex.getMessage());
+        } catch (IOException ex) {
+            System.out.println("Error leyendo fichero " + ex.getMessage());
+        }
+        
+        
+        
     }
     
+    
+    private static void addAllOptions(MenuDaw menu) {
+        try {
+            menu.addOption("Salir");
+            menu.addOption("Dar de alta entrenador");
+            menu.addOption("Dar de baja entrenador");
+            menu.addOption("Consultar entrenador");
+            menu.addOption("Cazar Pokemon");
+            menu.addOption("Listar Pokemons Cazados");
+            menu.addOption("Listar tipos Pokemon existentes en juego");
+            
+        } catch (OptionDuplicateException ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * pide datos al usuario para poder dar de alta a un entrenador
+     */
+    private void altaEntrenador() {
+        try {
+            sc = new Scanner(System.in);
+            int insertado ;
+            System.out.println("Pon el nombre del nuevo entrenador");
+            String nombre = sc.nextLine();
+            System.out.println("Pon el password");
+            String password = sc.nextLine();
+            Entrenador nuevo = new Entrenador(nombre, password);
+            //llamar al dao existeEntrenador
+            //if.... 
+            insertado = entrenadores.altaEntrenador(nuevo);
+            if (insertado > 0)
+            {
+                System.out.println("Se ha insertado el nuevo entrenador ");
+            }
+            else
+            {
+                System.out.println("Error insertando entrenador");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error SQL insertando entrenador" + ex.getMessage());
+        }
+        
+    }
+
+    private void borrarEntrenador() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void ConsultaEntrenador() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void consultaEntrenador() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void cazarPokemon() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void listarMochila() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void listarTodosPokemons() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void salir() {
+        System.out.println("Te esperamos pronto de vuelta... ");
+    }
+        
 }
