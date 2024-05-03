@@ -16,9 +16,9 @@ public class DBConnect {
  static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String PROTOCOL = "jdbc:mysql:";
     static final String HOST = "127.0.0.1";
-    static final String BD_NAME = "dbcountry";
-    static final String USER = "usrcountry";
-    static final String PASSWORD = "pswcountry";
+    static final String BD_NAME = "dbpokemon";
+    static final String USER = "usrpokemon";
+    static final String PASSWORD = "pswpokemon";
     static final String PARAMS = "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     
     public static void loadDriver() throws ClassNotFoundException {
