@@ -17,6 +17,7 @@ import menuUtils.MenuDaw;
 import menuUtils.OptionDuplicateException;
 import model.Entrenador;
 import model.EntrenadorDAO;
+import model.Pokemon;
 import model.PokemonDAO;
 
 /**
@@ -27,7 +28,8 @@ public class PokemonGo {
 
     Scanner sc;
     EntrenadorDAO entrenadores;
-    PokemonDAO pokemons;
+    PokemonDAO pokedex;
+    Entrenador login;
     /**
      * @param args the command line arguments
      */
@@ -44,7 +46,11 @@ public class PokemonGo {
             mostrarLogo();
             DBConnect.loadDriver();
             entrenadores = new EntrenadorDAO();
+            pokedex = new PokemonDAO();
             //boolean user_valid = validar_usuari();
+            //canviar a que devuelva String en lugar de boolean
+            
+            login = recuperar_datos_entrenador();
             boolean user_valid = true;
             if (user_valid)
             {
@@ -157,7 +163,15 @@ public class PokemonGo {
     }
 
     private void cazarPokemon() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        try {
+            Pokemon aparecido = pokedex.getPokemonRandom();
+            
+            System.out.println(aparecido);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
     }
 
     private void listarMochila() {
@@ -236,7 +250,7 @@ public class PokemonGo {
     }
 
     private void juego_valido() {
-        boolean exit = true;
+        boolean exit = false;
          MenuDaw menu = new MenuDaw("**** POKEMON GO ***");
                  addAllOptions(menu); 
                  //introDadesProva(/* */);
@@ -277,6 +291,10 @@ public class PokemonGo {
 
                      } 
                  }while(!exit); 
+    }
+
+    private Entrenador recuperar_datos_entrenador() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
         
 }
